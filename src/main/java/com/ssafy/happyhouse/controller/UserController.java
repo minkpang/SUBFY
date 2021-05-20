@@ -87,7 +87,7 @@ public class UserController {
 	}
 	
 	// 회원 정보 수정
-	@PutMapping("") // 테스트 못해봄/ 수정 전 mapping : "modify"
+	@PutMapping({"", "/modify"})  // 테스트 못해봄/ 수정 전 mapping : "modify"
 	public ResponseEntity<String> modify(MemberDto memberDto) {
 		int cnt = userService.userModify(memberDto);
 		if(cnt != 0) {
@@ -98,7 +98,7 @@ public class UserController {
 	}
 	
 	// 회원 정보 삭제
-	@DeleteMapping
+	@DeleteMapping({"", "/delete"}) 
 	public ResponseEntity<String> delete(@RequestParam("userid") String userid, Model model) {
 		System.out.println("delete");
 		int cnt = userService.userDelete(userid);
