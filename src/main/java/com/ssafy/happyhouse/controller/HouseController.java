@@ -33,6 +33,7 @@ public class HouseController {
 	}
 	
 	// 역삼동 건물들 먼저 검색
+	//localhost:9999/house -> 역삼동 건물들 리스트 표시
 	@GetMapping
 	public ResponseEntity<List<HouseDealDto>> list() throws Exception {
 		System.out.println(">> 역삼동(default) 건물들 출력");
