@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.ssafy.happyhouse.model.mapper.QnaMapper">
+
+	<!-- 게시글 목록 -->
+	<select id="qnaList" resultType="qnaDto">
+		select id, author, title, content, wdate
+		from qna
+		order by id;
+	</select>	
+	
+	<!-- 게시글 id를 눌러서 자세히 보기 -->
+	<select id="searchById" parameterType="int"  resultType="qnaDto">
+		select id, author, title, content, wdate
+		from qna
+		where id = #{id}
+	</select>	
+	
+	<!-- 게시글 제목으로 검색 -->
+	<select id="searchByTitle" parameterType="String"  resultType="qnaDto">
+		select id, author,title, content, wdate
+		from qna
+		where title like CONCAT('%', #{title}, '%')
+	</select>
+
+	<!-- 게시글 내용으로 검색 -->
+	<select id="searchByContent" parameterType="String"  resultType="qnaDto">
+		select id, author,title, content, wdate
+		from qna
+		where content like CONCAT('%', #{content}, '%')
+	</select>
+	
+	<!-- 게시글 입력 -->
+	<insert id="qnaRegister" parameterType="qnaDto">
+		insert into qna (id, author, title, content, wdate) 
+		values (#{id}, #{author}, #{title}, #{content}, now())
+	</insert>	
+	
+	<!-- 게시글 수정 -->
+	<insert id="qnaModify" parameterType="qnaDto">
+		update qna
+		set id = #{id}, author = #{author}, wdate = #{wdate}, title = #{title}, content = #{content}
+		where id = #{id}
+	</insert>		
+			
+	<!-- 게시글 삭제-->
+	<delete id="qnaDelete" parameterType="int">
+		delete from qna
+		where id = #{id}
+	</delete>	
+				
+</mapper>
