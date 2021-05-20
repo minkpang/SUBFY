@@ -98,15 +98,19 @@ public class UserController {
 	}
 	
 	// 회원 정보 삭제
-//	@DeleteMapping
-//	public String delete(@RequestParam("userid") String userid, Model model) {
-//		System.out.println("delete");
-//		int cnt = userService.userDelete(userid);
-//		if(cnt !=0 ) {
-//			System.out.println(">>>> 회원 정보 수정 성공 " + memberDto);
-//		}
-//		return new ResponseEntity<String>("회원 정보 삭제 성공", HttpStatus.OK);
-//	}
+	@DeleteMapping
+	public ResponseEntity<String> delete(@RequestParam("userid") String userid, Model model) {
+		System.out.println("delete");
+		int cnt = userService.userDelete(userid);
+		if(cnt !=0 ) {
+			System.out.println(">>>> 회원 정보 삭제 성공 " + userid);
+			return new ResponseEntity<String>("회원 정보 삭제 성공", HttpStatus.OK);
+		} else {
+			System.out.println(">>>> 회원 정보 삭제 실패 " + userid);
+			return new ResponseEntity<String>("회원 정보 삭제 실패", HttpStatus.NO_CONTENT);
+		}
+	} 
+	
 //	
 //	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 //	public String delete(@RequestParam("userid") String userid, Model model) {

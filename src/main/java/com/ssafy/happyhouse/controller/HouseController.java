@@ -32,7 +32,7 @@ public class HouseController {
 		return "search";
 	}
 	
-	// 역삼동 건물들 먼저 검색
+	// 역삼동 건물들 리스트로 보여주기
 	//localhost:9999/house -> 역삼동 건물들 리스트 표시
 	@GetMapping
 	public ResponseEntity<List<HouseDealDto>> list() throws Exception {
