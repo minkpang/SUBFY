@@ -4,13 +4,13 @@
 	
 <mapper namespace="com.ssafy.happyhouse.model.mapper.HouseDealMapper">
 	<select id="selectByAptName" parameterType="String"  resultType="houseDealDto">
-		select no, dong, aptName, dealAmount, buildYear, dealYear, dealMonth, type 
+		select *
 		from housedeal
 		where AptName like CONCAT('%', #{AptName}, '%')
 	</select>
 	
 	<select id="selectByDong" parameterType="String"  resultType="houseDealDto">
-		select no, dong, aptName, dealAmount, buildYear, dealYear, dealMonth, type 
+		select *
 		from housedeal
 		where dong like CONCAT('%', #{dong}, '%')
 	</select>
