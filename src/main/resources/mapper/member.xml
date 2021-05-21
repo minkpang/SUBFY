@@ -11,13 +11,13 @@
 	</select>
 	
 	<select id="userList" resultType="memberDto">
-		select userid, userpwd, username, email, address, date_format(joindate, '%y.%m.%d') joindate
+		select userid, userpwd, username, email, address, joindate
 		from ssafy_member
 		order by joindate desc;
 	</select>
 	
 	<select id="userInfo" parameterType="String" resultType="memberdto">
-		select userid, userpwd, username, email, address, date_format(joindate, '%y.%m.%d') joindate
+		select userid, userpwd, username, email, address, joindate
 		from ssafy_member
 		where userid = #{userid}
 	</select>
@@ -29,7 +29,7 @@
 	
 	<update id="userModify" parameterType="MemberDto">
 		update ssafy_member
-		set userpwd = #{userpwd}, email = #{email}, address = #{address}
+		set userpwd = #{userpwd}, username = #{username}, email = #{email}, address = #{address}
 		where userid = #{userid}
 	</update>
 	

@@ -26,11 +26,11 @@ public class QnaController {
 	private QnaService qnaService;
 	
 	// 게시글 목록
-	@GetMapping("")
+	@GetMapping
 	public ResponseEntity<List<QnaDto>> list() throws Exception {
 		System.out.println("게시글 목록 : /qna");
 		List<QnaDto> qnaList = qnaService.qnaList();
-		System.out.println(qnaList);
+//		System.out.println(qnaList);
 		if(qnaList.isEmpty()) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		} 
@@ -44,7 +44,7 @@ public class QnaController {
 		return qnaService.searchById(id);
 	}
 	
-	// 게시글 제목으로 검색
+	// 게시글 제목으로 검색 
 	@GetMapping("/title/{title}")
 	public ResponseEntity<List<QnaDto>> searchByTitle(@PathVariable String title) throws Exception{
 		System.out.println("게시글 제목으로 검색: /title/" + title);
@@ -71,7 +71,6 @@ public class QnaController {
 	// 게시글 작성
 	@PostMapping
 	public ResponseEntity<String> register(@RequestBody QnaDto qnaDto) throws Exception {
-//	public ResponseEntity<String> register(QnaDto qnaDto) throws Exception {
 		System.out.println("게시판 작성 " + qnaDto);
 		if(qnaService.qnaRegister(qnaDto) > 0) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);

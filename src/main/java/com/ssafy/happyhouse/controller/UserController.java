@@ -1,5 +1,6 @@
 package com.ssafy.happyhouse.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +17,9 @@ import org.springframework.web.bind.annotation.*;
 
 import com.ssafy.happyhouse.model.MemberDto;
 import com.ssafy.happyhouse.model.service.UserService;
+
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 @CrossOrigin("*")
 @RestController
@@ -36,11 +40,14 @@ public class UserController {
 		return new ResponseEntity<List<MemberDto>> (userList, HttpStatus.OK);
 	}
 	
-	// 로그인
-	@PostMapping("/login") // userid, userpwd
-	public ResponseEntity<String> login(@RequestParam Map<String, String> map, Model model, HttpSession session, HttpServletResponse response) {
+	// 로그인 -> http://localhost:9999/user/login -> userid, userpwd
+	@PostMapping("/login")    
+	public ResponseEntity<String> login(@RequestBody Map<String, String> map, Model model, HttpSession session, HttpServletResponse response) {
 		try {
+			System.out.println(">>login " + map);
+			
 			MemberDto memberDto = userService.login(map);
+			
 			if(memberDto != null) {
 				session.setAttribute("userinfo", memberDto);
 				
@@ -68,17 +75,16 @@ public class UserController {
 		return new ResponseEntity<String>("로그인 성공", HttpStatus.OK);
 	}
 	
-	// 로그아웃
+	// 로그아웃 -> http://localhost:9999/user/logout
 	@GetMapping("/logout") 
 	public void logout(HttpSession session) {
 		session.removeAttribute("userinfo"); // 세션 삭제
 		session.invalidate();
 	}
 	
-	// 회원가입
+	// 회원가입 -> http://localhost:9999/user/join -> userid, userpwd, username, email, address
 	@PostMapping("/join")
-	public ResponseEntity<String> join(MemberDto memberDto) {
-		// userid, userpwd, username, email, address
+	public ResponseEntity<String> join(@RequestBody MemberDto memberDto) {
 		int cnt = userService.userRegister(memberDto);
 		if(cnt != 0) {
 			System.out.println(">>>> 회원가입 성공 " + memberDto);
@@ -87,9 +93,9 @@ public class UserController {
 			return new ResponseEntity<String>("회원가입 실패", HttpStatus.NO_CONTENT);
 	}
 	
-	// 회원 정보 수정
-	@PutMapping({"", "/modify"})  // 테스트 못해봄/ 수정 전 mapping : "modify"
-	public ResponseEntity<String> modify(MemberDto memberDto) {
+	// 회원 정보 수정 -> http://localhost:9999/user/ -> userid, userpwd, username, email, address
+	@PutMapping({"", "/modify"}) 
+	public ResponseEntity<String> modify(@RequestBody MemberDto memberDto) {
 		int cnt = userService.userModify(memberDto);
 		if(cnt != 0) {
 			System.out.println(">>>> 회원 정보 수정 성공 " + memberDto);
@@ -98,10 +104,9 @@ public class UserController {
 			return new ResponseEntity<String>("회원 정보 수정 실패", HttpStatus.NO_CONTENT);
 	}
 	
-	// 회원 정보 삭제
-	@DeleteMapping({"", "/delete"}) 
-	public ResponseEntity<String> delete(@RequestParam("userid") String userid, Model model) {
-		System.out.println("delete");
+	// 회원 정보 삭제 -> http://localhost:9999/user/삭제할 id
+	@DeleteMapping("/{userid}")
+	public ResponseEntity<String> delete(@PathVariable String userid) {
 		int cnt = userService.userDelete(userid);
 		if(cnt !=0 ) {
 			System.out.println(">>>> 회원 정보 삭제 성공 " + userid);
@@ -111,5 +116,5 @@ public class UserController {
 			return new ResponseEntity<String>("회원 정보 삭제 실패", HttpStatus.NO_CONTENT);
 		}
 	} 
-	
+
 }
