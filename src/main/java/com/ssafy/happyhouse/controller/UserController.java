@@ -26,6 +26,8 @@ import io.swagger.annotations.ApiParam;
 @RequestMapping("/user")
 public class UserController {
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+	private static final String SUCCESS = "success";
+	private static final String FAIL = "fail";
 	
 	@Autowired
 	private UserService userService;
@@ -63,16 +65,14 @@ public class UserController {
 			} 
 			else {
 				model.addAttribute("msg", "아이디 또는 비밀번호 확인 후 로그인해 주세요.");
-				return new ResponseEntity<String>("아이디 또는 비밀번호 확인 후 로그인해 주세요.", 
-													HttpStatus.NO_CONTENT);
+				return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("msg", "로그인 중 문제가 발생했습니다.");
-			return new ResponseEntity<String>("로그인 중 문제가 발생했습니다", 
-					HttpStatus.NO_CONTENT);
+			return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 		}
-		return new ResponseEntity<String>("로그인 성공", HttpStatus.OK);
+		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 	}
 	
 	// 로그아웃 -> http://localhost:9999/user/logout
@@ -88,9 +88,9 @@ public class UserController {
 		int cnt = userService.userRegister(memberDto);
 		if(cnt != 0) {
 			System.out.println(">>>> 회원가입 성공 " + memberDto);
-			return new ResponseEntity<String>("회원가입 성공", HttpStatus.OK);
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		} else
-			return new ResponseEntity<String>("회원가입 실패", HttpStatus.NO_CONTENT);
+			return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
 	
 	// 회원 정보 수정 -> http://localhost:9999/user/ -> userid, userpwd, username, email, address
@@ -99,9 +99,9 @@ public class UserController {
 		int cnt = userService.userModify(memberDto);
 		if(cnt != 0) {
 			System.out.println(">>>> 회원 정보 수정 성공 " + memberDto);
-			return new ResponseEntity<String>("회원 정보 수정 성공", HttpStatus.OK);
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		} else
-			return new ResponseEntity<String>("회원 정보 수정 실패", HttpStatus.NO_CONTENT);
+			return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
 	
 	// 회원 정보 삭제 -> http://localhost:9999/user/삭제할 id
@@ -110,10 +110,10 @@ public class UserController {
 		int cnt = userService.userDelete(userid);
 		if(cnt !=0 ) {
 			System.out.println(">>>> 회원 정보 삭제 성공 " + userid);
-			return new ResponseEntity<String>("회원 정보 삭제 성공", HttpStatus.OK);
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		} else {
 			System.out.println(">>>> 회원 정보 삭제 실패 " + userid);
-			return new ResponseEntity<String>("회원 정보 삭제 실패", HttpStatus.NO_CONTENT);
+			return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 		}
 	} 
 
