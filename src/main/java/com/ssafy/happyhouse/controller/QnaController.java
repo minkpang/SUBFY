@@ -70,8 +70,8 @@ public class QnaController {
 	
 	// 게시글 작성
 	@PostMapping
-//	public ResponseEntity<String> register(@RequestBody QnaDto qnaDto) throws Exception {
-	public ResponseEntity<String> register(QnaDto qnaDto) throws Exception {
+	public ResponseEntity<String> register(@RequestBody QnaDto qnaDto) throws Exception {
+//	public ResponseEntity<String> register(QnaDto qnaDto) throws Exception {
 		System.out.println("게시판 작성 " + qnaDto);
 		if(qnaService.qnaRegister(qnaDto) > 0) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
