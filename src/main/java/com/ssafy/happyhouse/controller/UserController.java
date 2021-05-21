@@ -18,9 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import com.ssafy.happyhouse.model.MemberDto;
 import com.ssafy.happyhouse.model.service.UserService;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/user")
