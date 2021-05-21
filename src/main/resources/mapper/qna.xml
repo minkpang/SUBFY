@@ -33,9 +33,15 @@
 	</select>
 	
 	<!-- 게시글 입력 -->
+	<!--  
 	<insert id="qnaRegister" parameterType="qnaDto">
 		insert into qna (id, author, title, content, wdate) 
 		values (#{id}, #{author}, #{title}, #{content}, now())
+	</insert>	
+	-->
+	<insert id="qnaRegister" parameterType="qnaDto">
+		insert into qna (id, author, title, content, wdate) 
+		values (#{id}, #{author}, #{title}, #{content}, #{wdate})
 	</insert>	
 	
 	<!-- 게시글 수정 -->

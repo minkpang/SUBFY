@@ -37,7 +37,7 @@ public class UserController {
 	}
 	
 	// 로그인
-	@PostMapping("/login") 
+	@PostMapping("/login") // userid, userpwd
 	public ResponseEntity<String> login(@RequestParam Map<String, String> map, Model model, HttpSession session, HttpServletResponse response) {
 		try {
 			MemberDto memberDto = userService.login(map);
@@ -78,6 +78,7 @@ public class UserController {
 	// 회원가입
 	@PostMapping("/join")
 	public ResponseEntity<String> join(MemberDto memberDto) {
+		// userid, userpwd, username, email, address
 		int cnt = userService.userRegister(memberDto);
 		if(cnt != 0) {
 			System.out.println(">>>> 회원가입 성공 " + memberDto);
@@ -111,17 +112,4 @@ public class UserController {
 		}
 	} 
 	
-//	
-//	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-//	public String delete(@RequestParam("userid") String userid, Model model) {
-//		System.out.println("delete");
-//		try {
-//			userService.userDelete(userid);
-//			return "redirect:/";
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			model.addAttribute("msg", "글삭제 처리 중 문제가 발생했습니다.");
-//			return "error/error";
-//		}
-//	}
 }

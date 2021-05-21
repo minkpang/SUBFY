@@ -7,6 +7,14 @@ CREATE TABLE station(
   ,station_name  VARCHAR(20) NOT NULL
   ,jibun_address VARCHAR(30) DEFAULT NULL
   ,doro_address  VARCHAR(30) DEFAULT NULL
+  ,dong VARCHAR(10) DEFAULT NULL
 );
 
 select * from station;
+
+-- alter table station add dong varchar(10) default null;
+-- 동 칼럼 추가
+select jibun_address from station;
+
+-- insert station (dong) 
+-- 	select 

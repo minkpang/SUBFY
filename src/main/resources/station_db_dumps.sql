@@ -158,3 +158,4 @@ INSERT INTO station(authority,line_number,station_name,jibun_address,doro_addres
 INSERT INTO station(authority,line_number,station_name,jibun_address,doro_address) VALUES ('서울교통공사','2호선','아현','서울특별시 마포구 아현동 354-23','서울특별시 마포구 신촌로 지하 270');
 INSERT INTO station(authority,line_number,station_name,jibun_address,doro_address) VALUES ('서울교통공사','2호선','충정로(경기대입구)','서울특별시 서대문구 충정로3가 319-1','서울특별시 서대문구 서소문로 지하 17');
 
+commit;
