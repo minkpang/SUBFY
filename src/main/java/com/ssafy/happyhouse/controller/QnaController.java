@@ -30,8 +30,8 @@ public class QnaController {
 	public ResponseEntity<List<QnaDto>> search(@RequestParam(value="key", required=false) String key, 
 			@RequestParam(value="word", required=false) String word) throws Exception {
 		// defaul-전체게시물 목록: http://localhost:9999/qna
-		// 제목으로 검색 : http://localhost:9999/qna?key=title?word=자바
-		// 내용으로 검색:  http://localhost:9999/qna?key=content?word=자바자바
+		// 제목으로 검색 : http://localhost:9999/qna?key=title&word=자바
+		// 내용으로 검색:  http://localhost:9999/qna?key=content&word=자바자바
 
 		List<QnaDto> qnaList = null;
 		System.out.println(">>search " + key + ", " + word);

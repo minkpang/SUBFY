@@ -8,7 +8,6 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.ssafy.happyhouse.model.HouseDealDto;
 
-
 @Mapper
 public interface HouseDealMapper {
 	public List<HashMap<String, Object>> searchByAptName(String AptName) throws SQLException;
