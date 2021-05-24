@@ -18,11 +18,16 @@ public class HouseDealServiceImpl implements HouseDealService {
 
 	@Override
 	public List<HouseDealDto> searchByAptName(String AptName) throws SQLException {
-		return sqlSession.getMapper(HouseDealMapper.class).selectByAptName(AptName);
+		return sqlSession.getMapper(HouseDealMapper.class).searchByAptName(AptName);
 	}
 
 	@Override
 	public List<HouseDealDto> searchByDong(String dong) throws SQLException {
-		return sqlSession.getMapper(HouseDealMapper.class).selectByDong(dong);
+		return sqlSession.getMapper(HouseDealMapper.class).searchByDong(dong);
+	}
+	
+	@Override
+	public List<HouseDealDto> searchByStationName(String stationName) throws SQLException {
+		return sqlSession.getMapper(HouseDealMapper.class).searchByStationName(stationName);
 	}
 }

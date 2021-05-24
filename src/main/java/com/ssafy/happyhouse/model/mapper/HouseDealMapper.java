@@ -9,6 +9,7 @@ import com.ssafy.happyhouse.model.HouseDealDto;
 
 @Mapper
 public interface HouseDealMapper {
-	public List<HouseDealDto> selectByAptName(String AptName) throws SQLException;
-	public List<HouseDealDto> selectByDong(String dong) throws SQLException;
+	public List<HouseDealDto> searchByAptName(String AptName) throws SQLException;
+	public List<HouseDealDto> searchByDong(String dong) throws SQLException;
+	public List<HouseDealDto> searchByStationName(String stationName) throws SQLException;
 }
