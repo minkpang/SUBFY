@@ -64,21 +64,47 @@ on hd.dong = st.dong
 where st.stationName = '성수' or st.stationName = concat('성수', '역')
 order by distance, AptName;
 
--- 동 이름으로 검색
+-- 동 이름으로 검색 & 지하철 정보 & 같은 동에 있는 지하철 정보
 -- housedeal, houseinfo join
 SELECT hd.no, hd.dong, hd.AptName, hd.code, hd.buildYear, hd.jibun, hi.lat, hi.lng, hi.img, hd.dealAmount, hd.buildYear, 
-hd.dealYear, hd.dealMonth, hd.dealDay, hd.area, hd.floor, hd.type, hd.rentMoney 
-FROM houseinfo hi, housedeal hd
+hd.dealYear, hd.dealMonth, hd.dealDay, hd.area, hd.floor, hd.type, hd.rentMoney, 
+st.lineNumber, st.stationName, st.jibunAddress, st.doroAddress, st.stationLat, st.stationLng,
+ 6371 * acos( cos( radians(hi.lat) ) * cos( radians( st.stationLat ) )
+          * cos( radians( st.stationLng ) - radians(hi.lng) )
+          + sin( radians(hi.lat) ) * sin( radians( st.stationLat ) ) ) AS distance
+FROM houseinfo hi
+join housedeal hd
+on hi.AptName = hd.AptName and hi.dong = hd.dong
+join station as st
+on hi.dong = st.dong
 WHERE hi.dong like CONCAT('%', '행당', '%')
-AND hi.AptName = hd.AptName and hi.dong = hd.dong
-ORDER BY hd.AptName;
+order by distance, AptName;
 
--- 벽산 아파트 검색
+-- 아파트 이름으로 검색 & 지하철 정보
 SELECT hd.no, hd.dong, hd.AptName, hd.code, hd.buildYear, hd.jibun, hi.lat, hi.lng, hi.img, hd.dealAmount, hd.buildYear, 
-hd.dealYear, hd.dealMonth, hd.dealDay, hd.area, hd.floor, hd.type, hd.rentMoney 
-FROM houseinfo hi, housedeal hd
-WHERE hi.AptName like CONCAT('%', '벽산', '%')
-AND hi.AptName = hd.AptName and hi.dong = hd.dong
-ORDER BY hd.AptName;
+hd.dealYear, hd.dealMonth, hd.dealDay, hd.area, hd.floor, hd.type, hd.rentMoney, 
+st.lineNumber, st.stationName, st.jibunAddress, st.doroAddress, st.stationLat, st.stationLng,
+ 6371 * acos( cos( radians(hi.lat) ) * cos( radians( st.stationLat ) )
+          * cos( radians( st.stationLng ) - radians(hi.lng) )
+          + sin( radians(hi.lat) ) * sin( radians( st.stationLat ) ) ) AS distance
+FROM houseinfo hi
+join housedeal hd
+on hi.AptName = hd.AptName and hi.dong = hd.dong
+join station as st
+on hi.dong = st.dong
+WHERE hi.AptName like CONCAT('%', '풍림', '%')
+order by distance, AptName;
+
+
+-- 동 이름으로 검색 & 지하철 정보
+-- housedeal, houseinfo join
+-- SELECT hd.no, hd.dong, hd.AptName, hd.code, hd.buildYear, hd.jibun, hi.lat, hi.lng, hi.img, hd.dealAmount, hd.buildYear, 
+-- hd.dealYear, hd.dealMonth, hd.dealDay, hd.area, hd.floor, hd.type, hd.rentMoney 
+-- FROM houseinfo hi, housedeal hd
+-- WHERE hi.dong like CONCAT('%', '행당', '%')
+-- AND hi.AptName = hd.AptName and hi.dong = hd.dong
+-- ORDER BY hd.AptName;
+
+
 
 

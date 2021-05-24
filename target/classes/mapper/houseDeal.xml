@@ -6,30 +6,36 @@
 	<!-- 아파트 이름으로 검색 -->
 	<select id="searchByAptName" parameterType="String" resultType="java.util.HashMap">
 		SELECT hd.no, hd.dong, hd.AptName, hd.code, hd.buildYear, hd.jibun, hi.lat, hi.lng, hi.img, hd.dealAmount, hd.buildYear, 
-		hd.dealYear, hd.dealMonth, hd.dealDay, hd.area, hd.floor, hd.type, hd.rentMoney 
-		FROM houseinfo hi, housedeal hd
+		hd.dealYear, hd.dealMonth, hd.dealDay, hd.area, hd.floor, hd.type, hd.rentMoney, 
+		st.lineNumber, st.stationName, st.jibunAddress, st.doroAddress, st.stationLat, st.stationLng,
+		 6371 * acos( cos( radians(hi.lat) ) * cos( radians( st.stationLat ) )
+		          * cos( radians( st.stationLng ) - radians(hi.lng) )
+		          + sin( radians(hi.lat) ) * sin( radians( st.stationLat ) ) ) AS distance
+		FROM houseinfo hi
+		join housedeal hd
+		on hi.AptName = hd.AptName and hi.dong = hd.dong
+		join station as st
+		on hi.dong = st.dong
 		WHERE hi.AptName like CONCAT('%', #{AptName}, '%')
-		AND hi.AptName = hd.AptName and hi.dong = hd.dong
-		ORDER BY hd.AptName;
+		order by distance, AptName;	
 	</select>
 	
 	<!-- 동 이름으로 검색 -->
 	<select id="searchByDong" parameterType="String" resultType="java.util.HashMap">		
 		SELECT hd.no, hd.dong, hd.AptName, hd.code, hd.buildYear, hd.jibun, hi.lat, hi.lng, hi.img, hd.dealAmount, hd.buildYear, 
-		hd.dealYear, hd.dealMonth, hd.dealDay, hd.area, hd.floor, hd.type, hd.rentMoney 
-		FROM houseinfo hi, housedeal hd
+		hd.dealYear, hd.dealMonth, hd.dealDay, hd.area, hd.floor, hd.type, hd.rentMoney, 
+		st.lineNumber, st.stationName, st.jibunAddress, st.doroAddress, st.stationLat, st.stationLng,
+		 6371 * acos( cos( radians(hi.lat) ) * cos( radians( st.stationLat ) )
+		          * cos( radians( st.stationLng ) - radians(hi.lng) )
+		          + sin( radians(hi.lat) ) * sin( radians( st.stationLat ) ) ) AS distance
+		FROM houseinfo hi
+		join housedeal hd
+		on hi.AptName = hd.AptName and hi.dong = hd.dong
+		join station as st
+		on hi.dong = st.dong
 		WHERE hi.dong like CONCAT('%', #{dong}, '%')
-		AND hi.AptName = hd.AptName and hi.dong = hd.dong
-		ORDER BY hd.AptName;
+		order by distance, AptName;
 	</select>
-	
-	<!--  
-		SELECT hi.no as no, hi.dong as dong, hi.AptName as aptName, hi.code as code, hi.jibun as jibun, hd.dealAmount as dealAmount, hi.lat, hi.lng
-		FROM houseinfo hi, housedeal hd
-		WHERE hi.dong like CONCAT('%', '신천', '%')
-		AND hi.no = hd.no
-		ORDER BY AptName;	
-	-->
 	
 	<!-- 지하철역 이름으로 검색 -->
 	<select id="searchByStationName" parameterType="String" resultType="java.util.HashMap">
@@ -47,19 +53,5 @@
 		where st.stationName = #{stationName} or st.stationName = concat(#{stationName}, '역')
 		order by distance, AptName;
 	</select>
-	<!--  
-	<select id="searchByStationName" parameterType="String" resultType="java.util.HashMap">
-		SELECT hd.no, hd.dong, hd.AptName, hd.code, hd.buildYear, hd.jibun, hi.lat, hi.lng, hi.img, hd.dealAmount, hd.buildYear, 
-		hd.dealYear, hd.dealMonth, hd.dealDay, hd.area, hd.floor, hd.type, hd.rentMoney,
-		st.lineNumber, st.stationName, st.jibunAddress, st.doroAddress
-		from houseinfo as hi
-		join housedeal as hd
-		on hi.AptName = hd.AptName and hi.dong = hd.dong
-		join station as st
-		on hd.dong = st.dong
-		where st.stationName = #{stationName} or st.stationName = concat(#{stationName}, '역')
-		ORDER BY hi.AptName;
-	</select>
-	-->
 
 </mapper>
