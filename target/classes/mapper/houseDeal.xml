@@ -3,28 +3,46 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
 <mapper namespace="com.ssafy.happyhouse.model.mapper.HouseDealMapper">
-	
 	<!-- 아파트 이름으로 검색 -->
-	<select id="searchByAptName" parameterType="String"  resultType="houseDealDto">
-		select *
-		from housedeal
-		where AptName like CONCAT('%', #{AptName}, '%')
+	<select id="searchByAptName" parameterType="String" resultType="java.util.HashMap">
+		SELECT hd.no, hd.dong, hd.AptName, hd.code, hd.buildYear, hd.jibun, hi.lat, hi.lng, hi.img, hd.dealAmount, hd.buildYear, 
+		hd.dealYear, hd.dealMonth, hd.dealDay, hd.area, hd.floor, hd.type, hd.rentMoney 
+		FROM houseinfo hi, housedeal hd
+		WHERE hi.AptName like CONCAT('%', #{AptName}, '%')
+		AND hi.AptName = hd.AptName and hi.dong = hd.dong
+		ORDER BY hd.AptName;
 	</select>
 	
 	<!-- 동 이름으로 검색 -->
-	<select id="searchByDong" parameterType="String"  resultType="houseDealDto">
-		select *
-		from housedeal
-		where dong like CONCAT('%', #{dong}, '%')
+	<select id="searchByDong" parameterType="String" resultType="java.util.HashMap">		
+		SELECT hd.no, hd.dong, hd.AptName, hd.code, hd.buildYear, hd.jibun, hi.lat, hi.lng, hi.img, hd.dealAmount, hd.buildYear, 
+		hd.dealYear, hd.dealMonth, hd.dealDay, hd.area, hd.floor, hd.type, hd.rentMoney 
+		FROM houseinfo hi, housedeal hd
+		WHERE hi.dong like CONCAT('%', #{dong}, '%')
+		AND hi.AptName = hd.AptName and hi.dong = hd.dong
+		ORDER BY hd.AptName;
 	</select>
 	
+	<!--  
+		SELECT hi.no as no, hi.dong as dong, hi.AptName as aptName, hi.code as code, hi.jibun as jibun, hd.dealAmount as dealAmount, hi.lat, hi.lng
+		FROM houseinfo hi, housedeal hd
+		WHERE hi.dong like CONCAT('%', '신천', '%')
+		AND hi.no = hd.no
+		ORDER BY AptName;	
+	-->
+	
 	<!-- 지하철역 이름으로 검색 -->
-	<select id="searchByStationName" parameterType="String"  resultType="houseDealDto">
-		select *
-		from housedeal as hd
+	<select id="searchByStationName" parameterType="String" resultType="java.util.HashMap">
+		SELECT hd.no, hd.dong, hd.AptName, hd.code, hd.buildYear, hd.jibun, hi.lat, hi.lng, hi.img, hd.dealAmount, hd.buildYear, 
+		hd.dealYear, hd.dealMonth, hd.dealDay, hd.area, hd.floor, hd.type, hd.rentMoney,
+		st.lineNumber, st.stationName, st.jibunAddress, st.doroAddress
+		from houseinfo as hi
+		join housedeal as hd
+		on hi.AptName = hd.AptName and hi.dong = hd.dong
 		join station as st
 		on hd.dong = st.dong
-		where station_name = #{stationName} or station_name = concat(#{stationName}, '역')
+		where st.stationName = #{stationName} or st.stationName = concat(#{stationName}, '역')
+		ORDER BY hi.AptName;
 	</select>
 
 </mapper>

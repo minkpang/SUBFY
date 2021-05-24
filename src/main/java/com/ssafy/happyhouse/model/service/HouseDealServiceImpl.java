@@ -1,6 +1,7 @@
 package com.ssafy.happyhouse.model.service;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -15,19 +16,19 @@ public class HouseDealServiceImpl implements HouseDealService {
 	
 	@Autowired
 	private SqlSession sqlSession;
-
+	
 	@Override
-	public List<HouseDealDto> searchByAptName(String AptName) throws SQLException {
+	public List<HashMap<String, Object>> searchByAptName(String AptName) throws SQLException {
 		return sqlSession.getMapper(HouseDealMapper.class).searchByAptName(AptName);
 	}
 
 	@Override
-	public List<HouseDealDto> searchByDong(String dong) throws SQLException {
+	public List<HashMap<String, Object>> searchByDong(String dong) throws SQLException {
 		return sqlSession.getMapper(HouseDealMapper.class).searchByDong(dong);
 	}
 	
 	@Override
-	public List<HouseDealDto> searchByStationName(String stationName) throws SQLException {
+	public List<HashMap<String, Object>> searchByStationName(String stationName) throws SQLException {
 		return sqlSession.getMapper(HouseDealMapper.class).searchByStationName(stationName);
 	}
 }

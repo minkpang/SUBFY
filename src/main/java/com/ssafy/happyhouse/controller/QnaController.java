@@ -1,6 +1,7 @@
 package com.ssafy.happyhouse.controller;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -25,47 +26,45 @@ public class QnaController {
 	@Autowired
 	private QnaService qnaService;
 	
-	// 게시글 목록
 	@GetMapping
-	public ResponseEntity<List<QnaDto>> list() throws Exception {
-		System.out.println("게시글 목록 : /qna");
-		List<QnaDto> qnaList = qnaService.qnaList();
-//		System.out.println(qnaList);
+	public ResponseEntity<List<QnaDto>> search(@RequestParam(value="key", required=false) String key, 
+			@RequestParam(value="word", required=false) String word) throws Exception {
+		// defaul-전체게시물 목록: http://localhost:9999/qna
+		// 제목으로 검색 : http://localhost:9999/qna?key=title?word=자바
+		// 내용으로 검색:  http://localhost:9999/qna?key=content?word=자바자바
+
+		List<QnaDto> qnaList = null;
+		System.out.println(">>search " + key + ", " + word);
+		
+		if(key==null || word==null) {
+			qnaList = qnaService.qnaList();
+		} else if(key.equals("title")) {
+			qnaList = qnaService.searchByTitle(word);
+		} else if(key.equals("content")) {
+			qnaList = qnaService.searchByContent(word);
+		} 
+		
 		if(qnaList.isEmpty()) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		} 
 		return new ResponseEntity<List<QnaDto>>(qnaList, HttpStatus.OK);
 	}
+	
+//	@GetMapping
+//	public ResponseEntity<List<QnaDto>> list() throws Exception {
+//		System.out.println("게시글 목록 : /qna");
+//		List<QnaDto> qnaList = qnaService.qnaList();
+//		if(qnaList.isEmpty()) {
+//			return new ResponseEntity(HttpStatus.NO_CONTENT);
+//		} 
+//		return new ResponseEntity<List<QnaDto>>(qnaList, HttpStatus.OK);
+//	}
 	
 	// 게시판 아이디를 눌러서 자세히 보기
 	@GetMapping("/{id}")
 	public QnaDto searchById(@PathVariable int id) throws Exception{
 		System.out.println("게시글 id를 눌러 자세히 보기 : /id/" + id);
 		return qnaService.searchById(id);
-	}
-	
-	// 게시글 제목으로 검색 
-	@GetMapping("/title/{title}")
-	public ResponseEntity<List<QnaDto>> searchByTitle(@PathVariable String title) throws Exception{
-		System.out.println("게시글 제목으로 검색: /title/" + title);
-		List<QnaDto> qnaList = qnaService.searchByTitle(title);
-		System.out.println(qnaList);
-		if(qnaList.isEmpty()) {
-			return new ResponseEntity(HttpStatus.NO_CONTENT);
-		} 
-		return new ResponseEntity<List<QnaDto>>(qnaList, HttpStatus.OK);
-	}
-	
-	// 게시글 내용으로 검색
-	@GetMapping("/content/{content}")
-	public ResponseEntity<List<QnaDto>> searchByContent(@PathVariable String content) throws Exception {
-		System.out.println("게시글 내용으로 검색: /content/" + content);
-		List<QnaDto> qnaList = qnaService.searchByContent(content);
-		System.out.println(qnaList);
-		if(qnaList.isEmpty()) {
-			return new ResponseEntity(HttpStatus.NO_CONTENT);
-		} 
-		return new ResponseEntity<List<QnaDto>>(qnaList, HttpStatus.OK);
 	}
 	
 	// 게시글 작성
