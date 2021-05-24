@@ -35,6 +35,22 @@
 	<select id="searchByStationName" parameterType="String" resultType="java.util.HashMap">
 		SELECT hd.no, hd.dong, hd.AptName, hd.code, hd.buildYear, hd.jibun, hi.lat, hi.lng, hi.img, hd.dealAmount, hd.buildYear, 
 		hd.dealYear, hd.dealMonth, hd.dealDay, hd.area, hd.floor, hd.type, hd.rentMoney,
+		st.lineNumber, st.stationName, st.jibunAddress, st.doroAddress, st.stationLat, st.stationLng, 
+		 6371 * acos( cos( radians(hi.lat) ) * cos( radians( st.stationLat ) )
+		          * cos( radians( st.stationLng ) - radians(hi.lng) )
+		          + sin( radians(hi.lat) ) * sin( radians( st.stationLat ) ) ) AS distance
+		from houseinfo as hi
+		join housedeal as hd
+		on hi.AptName = hd.AptName and hi.dong = hd.dong
+		join station as st
+		on hd.dong = st.dong
+		where st.stationName = #{stationName} or st.stationName = concat(#{stationName}, '역')
+		order by distance, AptName;
+	</select>
+	<!--  
+	<select id="searchByStationName" parameterType="String" resultType="java.util.HashMap">
+		SELECT hd.no, hd.dong, hd.AptName, hd.code, hd.buildYear, hd.jibun, hi.lat, hi.lng, hi.img, hd.dealAmount, hd.buildYear, 
+		hd.dealYear, hd.dealMonth, hd.dealDay, hd.area, hd.floor, hd.type, hd.rentMoney,
 		st.lineNumber, st.stationName, st.jibunAddress, st.doroAddress
 		from houseinfo as hi
 		join housedeal as hd
@@ -44,5 +60,6 @@
 		where st.stationName = #{stationName} or st.stationName = concat(#{stationName}, '역')
 		ORDER BY hi.AptName;
 	</select>
+	-->
 
 </mapper>

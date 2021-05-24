@@ -1,3 +1,15 @@
+drop table if exists station;
+
+CREATE TABLE station(
+   station_id  int primary key auto_increment, 
+   authority     VARCHAR(15) DEFAULT NULL
+  ,line_number   VARCHAR(20) NOT NULL
+  ,station_name  VARCHAR(20) NOT NULL
+  ,jibun_address VARCHAR(30) DEFAULT NULL
+  ,doro_address  VARCHAR(30) DEFAULT NULL
+  ,dong VARCHAR(10) DEFAULT NULL
+);
+
 -- 우이신설
 INSERT INTO station(authority,line_number,station_name,jibun_address,doro_address) VALUES ('우이신설','우이신설','북한산우이','서울특별시 강북구 우이동 16-20',NULL);
 INSERT INTO station(authority,line_number,station_name,jibun_address,doro_address) VALUES ('우이신설','우이신설','솔밭공원','서울특별시 강북구 우이동 57-28',NULL);
@@ -158,4 +170,17 @@ INSERT INTO station(authority,line_number,station_name,jibun_address,doro_addres
 INSERT INTO station(authority,line_number,station_name,jibun_address,doro_address) VALUES ('서울교통공사','2호선','아현','서울특별시 마포구 아현동 354-23','서울특별시 마포구 신촌로 지하 270');
 INSERT INTO station(authority,line_number,station_name,jibun_address,doro_address) VALUES ('서울교통공사','2호선','충정로(경기대입구)','서울특별시 서대문구 충정로3가 319-1','서울특별시 서대문구 서소문로 지하 17');
 
+-- 동 이름 추가하기
+set sql_safe_updates=0;
+update station set dong = substring_index(substring_index(jibun_address, " ", 3), " ", -1 )
+where substring_index(substring_index(jibun_address, " ", 3), " ", -1 ) like CONCAT('%', '동', '%');
+update station set dong = substring_index(substring_index(jibun_address, " ", 4), " ", -1 )
+where substring_index(substring_index(jibun_address, " ", 4), " ", -1 ) like CONCAT('%', '동', '%');
+
+-- 자동 mapping을 위해 컬럼명경
+alter table station change station_id stationId int;
+alter table station change line_number lineNumber VARCHAR(20);
+alter table station change station_name stationName VARCHAR(20);
+alter table station change jibun_address jibunAddress VARCHAR(30);
+alter table station change doro_address doroAddress VARCHAR(30);
 commit;
