@@ -3,37 +3,42 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ssafy.happyhouse.model.mapper.UserMapper">
-
-	<select id="login" parameterType="map" resultType="memberDto">
-		select username, userid, email
-		from ssafy_member
-		where userid = #{userid} and userpwd = #{userpwd}
-	</select>
 	
 	<select id="userList" resultType="memberDto">
 		select userid, userpwd, username, email, address, joindate
 		from ssafy_member
 		order by joindate desc;
 	</select>
+
+	<!-- 로그인 -->
+	<select id="login" parameterType="memberDto" resultType="memberDto">
+		select userid, userpwd, username, email, address, joindate
+		from ssafy_member
+		where userid = #{userid} and userpwd = #{userpwd}
+	</select>
+
+	<!-- 회원 등록  -->
+	<insert id="regist" parameterType="memberDto">
+		insert into ssafy_member (userid, userpwd, username, email, address, joindate)
+		values (#{userid}, #{userpwd}, #{username}, #{email}, #{address}, now())
+	</insert>
 	
-	<select id="userInfo" parameterType="String" resultType="memberdto">
+	<!-- 회원 정보 읽기 --> 
+	<select id="read" parameterType="String" resultType="memberDto">
 		select userid, userpwd, username, email, address, joindate
 		from ssafy_member
 		where userid = #{userid}
 	</select>
 	
-	<insert id="userRegister" parameterType="MemberDto">
-		insert into ssafy_member (userid, userpwd, username, email, address, joindate)
-		values (#{userid}, #{userpwd}, #{username}, #{email}, #{address}, now())
-	</insert>
-	
-	<update id="userModify" parameterType="MemberDto">
+	<!-- 회원 정보 업데이트 -->
+	<update id="update" parameterType="memberDto" >
 		update ssafy_member
 		set userpwd = #{userpwd}, username = #{username}, email = #{email}, address = #{address}
 		where userid = #{userid}
 	</update>
 	
-	<delete id="userDelete" parameterType="String">
+	<!-- 회원 탈퇴  -->
+	<delete id="delete" parameterType="String">
 		delete from ssafy_member
 		where userid = #{userid}
 	</delete>

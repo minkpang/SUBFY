@@ -1,5 +1,6 @@
 package com.ssafy.happyhouse.model.service;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -15,43 +16,41 @@ import com.ssafy.happyhouse.model.mapper.UserMapper;
 @Service
 public class UserServiceImpl implements UserService {
 	
-	private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
-	
 	@Autowired
 	private SqlSession sqlSession;
 	
 	@Override
-	public MemberDto login(Map<String, String> map) throws Exception {
-		System.out.println("login"+map.get("userid")+map.get("userpwd"));
-		if(map.get("userid") == null || map.get("userpwd") == null)
-			return null;
-		return sqlSession.getMapper(UserMapper.class).login(map);
+	public MemberDto login(MemberDto memberDto) throws Exception {
+		return sqlSession.getMapper(UserMapper.class).login(memberDto);
 	}
 
 	@Override
-	public List<MemberDto> userList() {
+	public String getServerInfo() {
+		return "사용자에게 전달하고 싶은 중요정보";
+	}
+
+	@Override
+	public boolean regist(MemberDto memberDto) throws Exception {
+		return sqlSession.getMapper(UserMapper.class).regist(memberDto) == 1;
+	}
+
+	@Override
+	public MemberDto read(String userid) throws Exception {
+		return sqlSession.getMapper(UserMapper.class).read(userid);
+	}
+
+	@Override
+	public boolean update(MemberDto memberDto) throws Exception {
+		return sqlSession.getMapper(UserMapper.class).update(memberDto) == 1;
+	}
+
+	@Override
+	public boolean delete(String userid) throws Exception {
+		return sqlSession.getMapper(UserMapper.class).delete(userid) == 1;
+	}
+	 
+	@Override
+	public List<MemberDto> userList() throws Exception {
 		return sqlSession.getMapper(UserMapper.class).userList();
-	}
-
-	@Override
-	public MemberDto userInfo(String userid) {
-		return sqlSession.getMapper(UserMapper.class).userInfo(userid);
-	}
-
-	@Override
-	public int userRegister(MemberDto memberDto) {
-		System.out.println("register");
-		return sqlSession.getMapper(UserMapper.class).userRegister(memberDto);
-	}
-
-	@Override
-	public int userModify(MemberDto memberDto) {
-		return sqlSession.getMapper(UserMapper.class).userModify(memberDto);
-	}
-
-	@Override
-	public int userDelete(String userid) {
-		System.out.println("delete"+userid);
-		return sqlSession.getMapper(UserMapper.class).userDelete(userid);
 	}
 }

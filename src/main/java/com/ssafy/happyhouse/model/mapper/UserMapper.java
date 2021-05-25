@@ -8,12 +8,10 @@ import com.ssafy.happyhouse.model.MemberDto;
 
 public interface UserMapper {
 
-	public MemberDto login(Map<String, String> map) throws SQLException;
-	
-//	REST
+	public MemberDto login(MemberDto memberDto) throws SQLException;
+	public int update(MemberDto memberDto);
+	public int delete(String userid);
+	public MemberDto read(String userid);
+	public int regist(MemberDto memberDto);
 	public List<MemberDto> userList();
-	public MemberDto userInfo(String userid);
-	public int userRegister(MemberDto memberDto);
-	public int userModify(MemberDto memberDto);
-	public int userDelete(String userid);
 }

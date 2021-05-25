@@ -95,7 +95,6 @@ on hi.dong = st.dong
 WHERE hi.AptName like CONCAT('%', '풍림', '%')
 order by distance, AptName;
 
-
 -- 동 이름으로 검색 & 지하철 정보
 -- housedeal, houseinfo join
 -- SELECT hd.no, hd.dong, hd.AptName, hd.code, hd.buildYear, hd.jibun, hi.lat, hi.lng, hi.img, hd.dealAmount, hd.buildYear, 

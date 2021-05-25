@@ -50,15 +50,6 @@ public class QnaController {
 		return new ResponseEntity<List<QnaDto>>(qnaList, HttpStatus.OK);
 	}
 	
-//	@GetMapping
-//	public ResponseEntity<List<QnaDto>> list() throws Exception {
-//		System.out.println("게시글 목록 : /qna");
-//		List<QnaDto> qnaList = qnaService.qnaList();
-//		if(qnaList.isEmpty()) {
-//			return new ResponseEntity(HttpStatus.NO_CONTENT);
-//		} 
-//		return new ResponseEntity<List<QnaDto>>(qnaList, HttpStatus.OK);
-//	}
 	
 	// 게시판 아이디를 눌러서 자세히 보기
 	@GetMapping("/{id}")
