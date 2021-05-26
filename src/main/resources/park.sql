@@ -23,6 +23,7 @@ on hd.dong = st.dong
 join park as pk
 on hd.dong = pk.dong
 where st.stationName = '성수' or st.stationName like concat('성수', '%')
+group by hd.AptName
 order by stationDistance, AptName, parkDistance;
 
 -- where st.stationName = '건대' or st.stationName like concat('건대', '%')

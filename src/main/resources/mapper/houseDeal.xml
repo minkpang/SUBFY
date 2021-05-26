@@ -23,6 +23,7 @@
 		join park as pk
 		on hd.dong = pk.dong
 		WHERE hi.AptName like CONCAT('%', #{AptName}, '%')
+		group by hd.no
 		order by stationDistance, AptName, parkDistance;	
 	</select>
 	
@@ -46,6 +47,7 @@
 		join park as pk
 		on hd.dong = pk.dong
 		WHERE hi.dong like CONCAT('%', #{dong}, '%')
+		group by hd.no
 		order by stationDistance, AptName, parkDistance;	
 	</select>
 	
@@ -69,6 +71,7 @@
 		join park as pk
 		on hd.dong = pk.dong
 		where st.stationName = #{stationName} or st.stationName = concat(#{stationName}, '역')
+		group by hd.no
 		order by stationDistance, AptName, parkDistance;
 	</select>
 </mapper>
