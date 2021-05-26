@@ -1,2 +1,0 @@
-1. station_db_dumps.sql (지하철역 db)
-2. subwayCoordinates_dumps.sql (지하철역 위도, 경도 db)

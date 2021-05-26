@@ -10,14 +10,20 @@
 		st.lineNumber, st.stationName, st.jibunAddress, st.doroAddress, st.stationLat, st.stationLng,
 		 6371 * acos( cos( radians(hi.lat) ) * cos( radians( st.stationLat ) )
 		          * cos( radians( st.stationLng ) - radians(hi.lng) )
-		          + sin( radians(hi.lat) ) * sin( radians( st.stationLat ) ) ) AS distance
+		          + sin( radians(hi.lat) ) * sin( radians( st.stationLat ) ) ) AS stationDistance,
+		pk.parkName, pk.parkType, pk.parkDoroAddress, pk.parkJibunAddress, pk.parkLat, pk.parkLng, pk.parkArea,
+		6371 * acos( cos( radians(hi.lat) ) * cos( radians( pk.parkLat ) )
+		          * cos( radians( pk.parkLng ) - radians(hi.lng) )
+		          + sin( radians(hi.lat) ) * sin( radians( pk.parkLat ) ) ) AS parkDistance          
 		FROM houseinfo hi
 		join housedeal hd
 		on hi.AptName = hd.AptName and hi.dong = hd.dong
 		join station as st
 		on hi.dong = st.dong
+		join park as pk
+		on hd.dong = pk.dong
 		WHERE hi.AptName like CONCAT('%', #{AptName}, '%')
-		order by distance, AptName;	
+		order by stationDistance, AptName, parkDistance;	
 	</select>
 	
 	<!-- 동 이름으로 검색 -->
@@ -27,31 +33,42 @@
 		st.lineNumber, st.stationName, st.jibunAddress, st.doroAddress, st.stationLat, st.stationLng,
 		 6371 * acos( cos( radians(hi.lat) ) * cos( radians( st.stationLat ) )
 		          * cos( radians( st.stationLng ) - radians(hi.lng) )
-		          + sin( radians(hi.lat) ) * sin( radians( st.stationLat ) ) ) AS distance
+		          + sin( radians(hi.lat) ) * sin( radians( st.stationLat ) ) ) AS stationDistance,
+		pk.parkName, pk.parkType, pk.parkDoroAddress, pk.parkJibunAddress, pk.parkLat, pk.parkLng, pk.parkArea,
+		6371 * acos( cos( radians(hi.lat) ) * cos( radians( pk.parkLat ) )
+		          * cos( radians( pk.parkLng ) - radians(hi.lng) )
+		          + sin( radians(hi.lat) ) * sin( radians( pk.parkLat ) ) ) AS parkDistance
 		FROM houseinfo hi
 		join housedeal hd
 		on hi.AptName = hd.AptName and hi.dong = hd.dong
 		join station as st
 		on hi.dong = st.dong
+		join park as pk
+		on hd.dong = pk.dong
 		WHERE hi.dong like CONCAT('%', #{dong}, '%')
-		order by distance, AptName;
+		order by stationDistance, AptName, parkDistance;	
 	</select>
 	
 	<!-- 지하철역 이름으로 검색 -->
 	<select id="searchByStationName" parameterType="String" resultType="java.util.HashMap">
-		SELECT hd.no, hd.dong, hd.AptName, hd.code, hd.buildYear, hd.jibun, hi.lat, hi.lng, hi.img, hd.dealAmount, hd.buildYear, 
+		SELECT hd.no, hd.dong, hd.AptName, hd.jibun, hi.lat, hi.lng, hd.dealAmount, 
 		hd.dealYear, hd.dealMonth, hd.dealDay, hd.area, hd.floor, hd.type, hd.rentMoney,
 		st.lineNumber, st.stationName, st.jibunAddress, st.doroAddress, st.stationLat, st.stationLng, 
 		 6371 * acos( cos( radians(hi.lat) ) * cos( radians( st.stationLat ) )
 		          * cos( radians( st.stationLng ) - radians(hi.lng) )
-		          + sin( radians(hi.lat) ) * sin( radians( st.stationLat ) ) ) AS distance
+		          + sin( radians(hi.lat) ) * sin( radians( st.stationLat ) ) ) AS stationDistance,
+		pk.parkName, pk.parkType, pk.parkDoroAddress, pk.parkJibunAddress, pk.parkLat, pk.parkLng, pk.parkArea,
+		6371 * acos( cos( radians(hi.lat) ) * cos( radians( pk.parkLat ) )
+		          * cos( radians( pk.parkLng ) - radians(hi.lng) )
+		          + sin( radians(hi.lat) ) * sin( radians( pk.parkLat ) ) ) AS parkDistance          
 		from houseinfo as hi
 		join housedeal as hd
 		on hi.AptName = hd.AptName and hi.dong = hd.dong
 		join station as st
 		on hd.dong = st.dong
+		join park as pk
+		on hd.dong = pk.dong
 		where st.stationName = #{stationName} or st.stationName = concat(#{stationName}, '역')
-		order by distance, AptName;
+		order by stationDistance, AptName, parkDistance;
 	</select>
-
 </mapper>

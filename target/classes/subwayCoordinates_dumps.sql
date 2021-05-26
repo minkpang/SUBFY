@@ -609,5 +609,6 @@ update station as st
 join subwaycoordinates as sc
 on st.stationName like concat(sc.stationName,'%')
 set st.stationLng = sc.stationLng; 
-commit;
+
+select * from station;
 commit;
