@@ -149,12 +149,11 @@ public class UserController {
 	}
 
 	// 로그인한 회원 탈퇴 -> http://localhost:9999/user/delete
-	@DeleteMapping("/delete")
-	public ResponseEntity<BooleanResult> deleteMember(@RequestBody String userid) throws Exception {
+	@DeleteMapping("/delete/{userid}")
+	public ResponseEntity<BooleanResult> deleteMember(@PathVariable String userid) throws Exception {
 		logger.info("회원 정보 삭제 !!!!" + new Date());
 		logger.info("회원 정보 삭제 !!!!" + userid);
 		boolean checkdelete = userService.delete(userid);
-//		 boolean checkdelete = userService.delete("ssafy2");
 		BooleanResult br = new BooleanResult();
 		br.setCheck(checkdelete);
 		br.setName("delete");
@@ -162,8 +161,4 @@ public class UserController {
 		return new ResponseEntity<BooleanResult>(br, HttpStatus.OK);
 	}
 
-	// 로그아웃?
-	@GetMapping("/logout")
-	public void logout() {
-	}
 }

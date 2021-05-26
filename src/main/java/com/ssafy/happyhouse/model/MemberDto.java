@@ -7,6 +7,8 @@ public class MemberDto {
 	private String username;
 
 	private String userpwd;
+	
+	private String gender;
 
 	private String email;
 
@@ -37,6 +39,15 @@ public class MemberDto {
 	public void setUserpwd(String userpwd) {
 		this.userpwd = userpwd;
 	}
+	
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
 
 	public String getEmail() {
 		return email;
@@ -64,8 +75,7 @@ public class MemberDto {
 
 	@Override
 	public String toString() {
-		return "MemberDto [userid=" + userid + ", username=" + username + ", userpwd=" + userpwd + ", email=" + email
-				+ ", address=" + address + ", joindate=" + joindate + "]";
+		return "MemberDto [userid=" + userid + ", username=" + username + ", userpwd=" + userpwd + ", gender=" + gender
+				+ ", email=" + email + ", address=" + address + ", joindate=" + joindate + "]";
 	}
-
 }
