@@ -5,7 +5,7 @@
 <mapper namespace="com.ssafy.happyhouse.model.mapper.HouseDealMapper">
 	<!-- 아파트 이름으로 검색 -->
 	<select id="searchByAptName" parameterType="String" resultType="java.util.HashMap">
-		SELECT hd.no, hd.dong, hd.AptName, hd.code, hd.buildYear, hd.jibun, hi.lat, hi.lng, hi.img, hd.dealAmount, hd.buildYear, 
+		SELECT hd.no, hd.dong, hd.AptName, hd.code, hd.buildYear, hd.jibun, hi.lat, hi.lng, hd.dealAmount, hd.buildYear, 
 		hd.dealYear, hd.dealMonth, hd.dealDay, hd.area, hd.floor, hd.type, hd.rentMoney, 
 		st.lineNumber, st.stationName, st.jibunAddress, st.doroAddress, st.stationLat, st.stationLng,
 		 6371 * acos( cos( radians(hi.lat) ) * cos( radians( st.stationLat ) )
@@ -29,7 +29,7 @@
 	
 	<!-- 동 이름으로 검색 -->
 	<select id="searchByDong" parameterType="String" resultType="java.util.HashMap">		
-		SELECT hd.no, hd.dong, hd.AptName, hd.code, hd.buildYear, hd.jibun, hi.lat, hi.lng, hi.img, hd.dealAmount, hd.buildYear, 
+		SELECT hd.no, hd.dong, hd.AptName, hd.code, hd.buildYear, hd.jibun, hi.lat, hi.lng, hd.dealAmount, hd.buildYear, 
 		hd.dealYear, hd.dealMonth, hd.dealDay, hd.area, hd.floor, hd.type, hd.rentMoney, 
 		st.lineNumber, st.stationName, st.jibunAddress, st.doroAddress, st.stationLat, st.stationLng,
 		 6371 * acos( cos( radians(hi.lat) ) * cos( radians( st.stationLat ) )
