@@ -1,0 +1,5 @@
+다음과 같은 error 발생 시
+### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: Expression #7 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'happyhouse.hi.lat' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+
+다음 명령어 입력하여 해결
+SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
